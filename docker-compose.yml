@@ -16,6 +16,8 @@ services:
       - MYSQL_DB=${MYSQL_DATABASE}
     restart: unless-stopped
 
+    command: sh -c "sleep 20 && uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"
+
   db:
     image: mysql:8.0
     container_name: mysql_db
