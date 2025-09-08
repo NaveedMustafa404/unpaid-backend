@@ -17,8 +17,8 @@ def read_records(db: Session = Depends(get_db)):
 
 @router.get("/dashboard-metrics", )
 def read_male_total_hours(db: Session = Depends(get_db)):
-    total_hours_man = all_record_crud.get_total_hours_of_man(db)
-    total_hours_women = all_record_crud.get_total_hours_of_woman(db)
+    total_hours_man = all_record_crud.get_avg_hours_of_man(db)
+    total_hours_women = all_record_crud.get_avg_hours_of_woman(db)
     return {"total_man_hours": total_hours_man or 0, "total_women_hours": total_hours_women or 0}
 
 @router.get("/woman")

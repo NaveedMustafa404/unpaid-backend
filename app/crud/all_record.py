@@ -11,14 +11,29 @@ def get_record(db: Session, record_id: int):
     return db.query(AllRecord).filter(AllRecord.id == record_id).first()
 ###
 def get_total_hours_of_man(db: Session):
+
     return db.query(func.sum(AllRecord.total_hour))\
-             .filter(AllRecord.gender == "Man")\
+        .filter(AllRecord.gender == "Man")\
              .scalar()
+
+def get_avg_hours_of_man(db: Session):
+
+    avg_value= db.query(func.avg(AllRecord.total_hour))\
+        .filter(AllRecord.gender == "Man")\
+             .scalar()
+    return avg_value or 0
 
 def get_total_hours_of_woman(db: Session):
     return db.query(func.sum(AllRecord.total_hour))\
              .filter(AllRecord.gender == "Woman")\
              .scalar()
+
+
+def get_avg_hours_of_woman(db: Session):
+    avg_value = db.query(func.avg(AllRecord.total_hour)) \
+        .filter(AllRecord.gender == "Woman") \
+        .scalar()
+    return avg_value or 0
 
 def create_record(db: Session, record: AllRecordCreate):
     db_record = AllRecord(**record.dict())
