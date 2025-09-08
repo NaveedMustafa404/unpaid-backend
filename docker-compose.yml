@@ -8,21 +8,24 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    env_file: .env
     environment:
-      - MYSQL_USER=fastapi_user
-      - MYSQL_PASSWORD=1234
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_SERVER=db
-      - MYSQL_DB=mydatabase
+      - MYSQL_DB=${MYSQL_DATABASE}
+    restart: unless-stopped
 
   db:
     image: mysql:8.0
     container_name: mysql_db
-    restart: always
+    restart: unless-stopped
+    env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: fastapi_user
-      MYSQL_PASSWORD: 1234
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
